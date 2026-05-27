@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FRemote — FreeShow Remote Control</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f0f1a;
+      color: #e0e0f0;
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1a1a3e 0%, #16213e 100%);
+      border-bottom: 1px solid #2a2a5a;
+      padding: 40px 24px 36px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.5px;
+    }
+
+    header h1 span {
+      color: #7b68ee;
+    }
+
+    header p.tagline {
+      margin-top: 10px;
+      font-size: 1.1rem;
+      color: #a0a0c0;
+    }
+
+    .badge {
+      display: inline-block;
+      margin-top: 14px;
+      background: #7b68ee22;
+      border: 1px solid #7b68ee55;
+      color: #9d8fff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 40px 24px 60px;
+    }
+
+    .download-box {
+      background: linear-gradient(135deg, #1e1e4a, #16213e);
+      border: 1px solid #7b68ee55;
+      border-radius: 16px;
+      padding: 32px;
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .download-box h2 {
+      font-size: 1.3rem;
+      color: #c8c0ff;
+      margin-bottom: 8px;
+    }
+
+    .download-box p {
+      color: #808099;
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+    }
+
+    .btn-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #7b68ee;
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.05rem;
+      font-weight: 600;
+      padding: 14px 32px;
+      border-radius: 12px;
+      transition: background 0.2s;
+    }
+
+    .btn-download:hover { background: #6a58d4; }
+
+    .btn-download svg { flex-shrink: 0; }
+
+    .version-note {
+      margin-top: 14px;
+      font-size: 0.8rem;
+      color: #606080;
+    }
+
+    section { margin-bottom: 40px; }
+
+    section h2 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #c8c0ff;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #2a2a4a;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .feature {
+      background: #1a1a30;
+      border: 1px solid #2a2a4a;
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .feature .icon {
+      font-size: 1.4rem;
+      margin-bottom: 8px;
+    }
+
+    .feature h3 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #d0c8ff;
+      margin-bottom: 4px;
+    }
+
+    .feature p {
+      font-size: 0.82rem;
+      color: #707090;
+      line-height: 1.4;
+    }
+
+    .steps {
+      counter-reset: step;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .step {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      background: #1a1a30;
+      border: 1px solid #2a2a4a;
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .step-num {
+      counter-increment: step;
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      background: #7b68ee;
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+
+    .step-body h3 {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #d0c8ff;
+      margin-bottom: 4px;
+    }
+
+    .step-body p {
+      font-size: 0.84rem;
+      color: #707090;
+      line-height: 1.45;
+    }
+
+    .step-body code {
+      background: #0d0d1f;
+      border: 1px solid #2a2a4a;
+      color: #9d8fff;
+      font-size: 0.8rem;
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+
+    .note {
+      background: #1a1a30;
+      border-left: 3px solid #7b68ee;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 16px;
+      font-size: 0.85rem;
+      color: #8080a0;
+      line-height: 1.5;
+    }
+
+    .note strong { color: #b0a8e0; }
+
+    footer {
+      text-align: center;
+      padding: 24px;
+      font-size: 0.8rem;
+      color: #404060;
+      border-top: 1px solid #1a1a2e;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>F<span>Remote</span></h1>
+  <p class="tagline">A remote control for <a href="https://freeshow.app" style="color:#7b68ee;text-decoration:none">FreeShow</a> presentation software</p>
+  <div class="badge">Android · v2.1</div>
+</header>
+
+<main>
+
+  <!-- Download -->
+  <div class="download-box">
+    <h2>Download for Android</h2>
+    <p>Requires Android 5.0 or later &nbsp;·&nbsp; ~48 MB</p>
+    <a class="btn-download" href="https://github.com/martin-grannis/fremote-app/releases/latest/download/app-release.apk">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="7 10 12 15 17 10"/>
+        <line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+      Download FRemote 2.1
+    </a>
+    <p class="version-note">v2.1 · May 2026</p>
+  </div>
+
+  <!-- What it does -->
+  <section>
+    <h2>What it does</h2>
+    <div class="features">
+      <div class="feature">
+        <div class="icon">📱</div>
+        <h3>Wireless slide control</h3>
+        <p>Navigate slides on any Android device over your local Wi-Fi network.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🗂️</div>
+        <h3>Project &amp; show browser</h3>
+        <p>Browse your FreeShow projects and jump directly to any show or slide.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🎵</div>
+        <h3>Audio &amp; video tiles</h3>
+        <p>Play foreground audio and video items directly from the remote.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">⬛</div>
+        <h3>Deliberate blank</h3>
+        <p>Clear the screen between items with a single tap, with optional blank-between transitions.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Installation -->
+  <section>
+    <h2>Installation</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>Download the APK</h3>
+          <p>Tap the Download button above on your Android device, or transfer the file to it.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>Allow installs from unknown sources</h3>
+          <p>Android will ask you to allow installation from this source the first time. Tap <strong>Settings → Allow</strong>, then come back and tap <strong>Install</strong>.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>Enable the FreeShow Remote API</h3>
+          <p>In FreeShow on your PC, go to <strong>Settings → Connection</strong> and make sure the Remote server is enabled. Note the IP address and port (default <code>5510</code>).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3>Connect</h3>
+          <p>Open FRemote, enter your PC's IP address, port, and password (if set), then tap Connect.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="note" style="margin-top:16px">
+      <strong>Same Wi-Fi network required.</strong> Your Android device and the PC running FreeShow must be on the same local network.
+    </div>
+  </section>
+
+  <!-- Requirements -->
+  <section>
+    <h2>Requirements</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num" style="background:#2a2a4a;color:#7b68ee">✓</div>
+        <div class="step-body">
+          <h3>FreeShow</h3>
+          <p>Free, open-source presentation software for Windows, Mac, and Linux. <a href="https://freeshow.app" style="color:#7b68ee">freeshow.app</a></p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:#2a2a4a;color:#7b68ee">✓</div>
+        <div class="step-body">
+          <h3>Android 5.0+</h3>
+          <p>Any Android phone or tablet running Android 5.0 (Lollipop) or later.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  FRemote is not affiliated with the FreeShow project. Built for use at St Margaret's.
+</footer>
+
+</body>
+</html>
